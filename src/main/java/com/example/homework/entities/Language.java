@@ -1,31 +1,41 @@
 package com.example.homework.entities;
 
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
+
+@Entity
+@Table(name="language")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+
 public class Language {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name= "id")
+    private int id;
+
+    @Column(name="name")
     private String name;
-    private String id;
 
-    public Language(){
 
-    }
-    public Language(String name, String id) {
-        this.name = name;
-        this.id = id;
-    }
+  @OneToMany(
+            mappedBy = "language",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private List<Technology> technologies = new ArrayList<>();
 
-    public String getName() {
-        return name;
-    }
 
-    public void setName(String name) {
-        this.name = name;
-    }
 
-    public String getId() {
-        return id;
-    }
 
-    public void setId(String id) {
-        this.id = id;
-    }
+
+
 }

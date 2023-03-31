@@ -1,22 +1,24 @@
 package com.example.homework.business.abstracts;
 
+import com.example.homework.business.request.LanguageRequest;
+import com.example.homework.business.response.LanguageResponse;
 import com.example.homework.entities.Language;
 
 import java.util.List;
 
 public interface LanguageService {
 
-    List<Language> getAll();
+    List <LanguageResponse>  getAll();
 
-    Language add(Language language);
+    LanguageResponse add(LanguageRequest languageRequest);
 
-    Language updateName(Language language, String id );
+    LanguageResponse updateName(LanguageRequest languageRequest, int id );
 
-    void delete(String id);
+    void delete(int id);
 
-    Language getById(String id);
+    LanguageResponse getById(int id);
 
-    Language getByName(String name);
+    LanguageResponse getByName(String name);
 
 
 

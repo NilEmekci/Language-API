@@ -1,9 +1,12 @@
 package com.example.homework.wepApi;
 
 import com.example.homework.business.abstracts.LanguageService;
+import com.example.homework.business.request.LanguageRequest;
+import com.example.homework.business.response.LanguageResponse;
 import com.example.homework.entities.Language;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController //annotation
@@ -18,32 +21,32 @@ public class LanguageController {
     }
 
     @GetMapping("/getAll")
-    public List<Language> getAll() {
+    public List<LanguageResponse> getAll() {
         return languageService.getAll();
     }
 
     @PostMapping("/add")
-    public Language add(@RequestBody Language language) {
-        return languageService.add(language);
+    public LanguageResponse add(@RequestBody  LanguageRequest languageRequest) {
+        return languageService.add(languageRequest);
     }
 
     @PutMapping("/update/{id}")
-    public Language updateName(@RequestBody Language language, @PathVariable String id) {
-        return languageService.updateName(language , id);
+    public LanguageResponse updateName(@RequestBody LanguageRequest languageRequest, @PathVariable int id) {
+        return languageService.updateName(languageRequest , id);
     }
 
     @DeleteMapping("/delete/{id}")
-    public void delete(@PathVariable String id) {
+    public void delete(@PathVariable int id) {
         languageService.delete(id);
     }
 
     @GetMapping("/getById/{id}")
-    public Language getById(@PathVariable String id) {
+    public LanguageResponse getById(@PathVariable int id) {
        return languageService.getById(id);
     }
 
     @GetMapping("/getByName/{name}")
-    public Language getByName(@PathVariable String name) {
+    public LanguageResponse getByName(@PathVariable String name) {
         return languageService.getByName(name);
     }
 
