@@ -1,9 +1,8 @@
-package com.example.homework.wepApi;
+package com.example.homework.controller;
 
 import com.example.homework.business.abstracts.LanguageService;
 import com.example.homework.business.request.LanguageRequest;
 import com.example.homework.business.response.LanguageResponse;
-import com.example.homework.entities.Language;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -26,17 +25,19 @@ public class LanguageController {
     }
 
     @PostMapping("/add")
-    public LanguageResponse add(@RequestBody  LanguageRequest languageRequest) {
+    public LanguageResponse add(@Valid @RequestBody  LanguageRequest languageRequest) {
+
         return languageService.add(languageRequest);
     }
 
     @PutMapping("/update/{id}")
-    public LanguageResponse updateName(@RequestBody LanguageRequest languageRequest, @PathVariable int id) {
+    public LanguageResponse updateName(@Valid @RequestBody LanguageRequest languageRequest,@PathVariable int id) {
+
         return languageService.updateName(languageRequest , id);
     }
 
     @DeleteMapping("/delete/{id}")
-    public void delete(@PathVariable int id) {
+    public void delete(@PathVariable  int id) {
         languageService.delete(id);
     }
 
@@ -46,7 +47,7 @@ public class LanguageController {
     }
 
     @GetMapping("/getByName/{name}")
-    public LanguageResponse getByName(@PathVariable String name) {
+    public LanguageResponse getByName(@Valid @PathVariable String name) {
         return languageService.getByName(name);
     }
 

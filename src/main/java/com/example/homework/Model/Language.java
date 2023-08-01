@@ -1,4 +1,4 @@
-package com.example.homework.entities;
+package com.example.homework.Model;
 
 
 import lombok.AllArgsConstructor;
@@ -14,8 +14,8 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-
 public class Language {
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

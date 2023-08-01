@@ -1,4 +1,4 @@
-package com.example.homework.entities;
+package com.example.homework.Model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

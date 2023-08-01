@@ -1,9 +1,7 @@
 package com.example.homework.business.abstracts;
 
-import com.example.homework.business.concretes.TechnologyManager;
 import com.example.homework.business.request.TechnologyRequest;
 import com.example.homework.business.response.TechnologyResponse;
-import com.example.homework.entities.Technology;
 
 import java.util.List;
 

@@ -5,7 +5,9 @@ import com.example.homework.business.request.LanguageRequest;
 import com.example.homework.business.response.LanguageResponse;
 import com.example.homework.dataAccess.abstracts.LanguageRepository;
 import com.example.homework.dataAccess.abstracts.TechnologyRepository;
-import com.example.homework.entities.Language;
+import com.example.homework.Model.Language;
+import com.example.homework.exception.EntityAlreadyException;
+import com.example.homework.exception.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -40,25 +42,22 @@ public class LanguageManager implements LanguageService {
     @Override
     public LanguageResponse add(LanguageRequest languageRequest) {
 
-        if ( !isPresent(languageRequest.getName()) ) {
+        languageRepository.findByName(languageRequest.getName()).ifPresent(l -> { throw new EntityAlreadyException("Language already exists with this name"); });
             LanguageResponse responseItem = new LanguageResponse();
             responseItem.setName(languageRequest.getName());
             Language languageToAdd =new Language();
             languageToAdd.setName(languageRequest.getName());
             languageRepository.save(languageToAdd);
             return responseItem;
-        } else throw new RuntimeException(" Id is invalid or name space cannot be empty ");
     }
 
     @Override
     public LanguageResponse updateName(LanguageRequest languageRequest, int id) {
 
+
+        Language language =languageRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Entity not found at this id"));
+        languageRepository.findByName(languageRequest.getName()).ifPresent(l -> { throw new EntityAlreadyException("Language already exists with this name"); });
         Language languageToUpdate = languageRepository.findById(id).get();
-
-        if (!isEmpty(languageRequest.getName()) || !languageRepository.findById(id).isPresent() ) {
-            throw new RuntimeException("User does not exist");
-        }
-
         languageToUpdate.setName(languageRequest.getName());
         languageRepository.save(languageToUpdate);
 
@@ -71,7 +70,8 @@ public class LanguageManager implements LanguageService {
 
     @Override
     public void delete(int id) {
-        Language languageToDelete = languageRepository.getById(id);
+        Language language = languageRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Entity not found at this id"));
+          Language languageToDelete = languageRepository.getById(id);
         if (languageToDelete == null) {
             throw new RuntimeException("User does not exist");
         }
@@ -80,7 +80,7 @@ public class LanguageManager implements LanguageService {
 
     @Override
     public LanguageResponse getById(int id) {
-        Language language = languageRepository.findById(id).orElseThrow(() -> new RuntimeException("Entity not found"));
+        Language language = languageRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Entity not found"));
         LanguageResponse languageResponse = new LanguageResponse();
         languageResponse.setId(id);
         languageResponse.setName(language.getName());
@@ -89,7 +89,7 @@ public class LanguageManager implements LanguageService {
 
     @Override
     public LanguageResponse getByName(String name) {
-        Language language = languageRepository.findByName(name).orElseThrow(()-> new RuntimeException("Entity not found"));
+        Language language = languageRepository.findByName(name).orElseThrow(()-> new EntityNotFoundException("Entity not found at this name"));
         LanguageResponse languageResponse = new LanguageResponse();
         languageResponse.setName(name);
         languageResponse.setId(language.getId());

@@ -12,7 +12,7 @@ public class TechnologyResponse {
 
     private int id;
     private String name;
-    private String technologiesLanguageName ;
+    private String LanguageName ;
 
 
 
