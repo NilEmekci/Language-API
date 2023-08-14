@@ -1,4 +1,4 @@
-package com.example.language.business.request;
+package com.example.language.dto;
 
 
 import lombok.AllArgsConstructor;

@@ -1,9 +1,9 @@
 package com.example.language.controller;
 
 
-import com.example.language.business.abstracts.TechnologyService;
-import com.example.language.business.request.TechnologyRequest;
-import com.example.language.business.response.TechnologyResponse;
+import com.example.language.dto.TechnologyRequest;
+import com.example.language.dto.TechnologyResponse;
+import com.example.language.service.TechnologyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

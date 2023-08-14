@@ -1,6 +1,6 @@
-package com.example.language.dataAccess.abstracts;
+package com.example.language.repository;
 
-import com.example.language.Model.Language;
+import com.example.language.model.Language;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

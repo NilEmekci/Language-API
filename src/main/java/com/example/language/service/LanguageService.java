@@ -1,30 +1,31 @@
-package com.example.language.business.concretes;
+package com.example.language.service;
 
-import com.example.language.business.abstracts.LanguageService;
-import com.example.language.business.request.LanguageRequest;
-import com.example.language.business.response.LanguageResponse;
-import com.example.language.dataAccess.abstracts.LanguageRepository;
-import com.example.language.dataAccess.abstracts.TechnologyRepository;
-import com.example.language.Model.Language;
+import com.example.language.dto.LanguageRequest;
+import com.example.language.dto.LanguageResponse;
 import com.example.language.exception.EntityAlreadyException;
 import com.example.language.exception.EntityNotFoundException;
+import com.example.language.model.Language;
+import com.example.language.repository.LanguageRepository;
+import com.example.language.repository.TechnologyRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class LanguageManager implements LanguageService {
+public class LanguageService {
 
     private final LanguageRepository languageRepository;
     private final TechnologyRepository technologyRepository;
 
-    public LanguageManager(LanguageRepository languageRepository, TechnologyRepository technologyRepository) {
+
+
+    public LanguageService(LanguageRepository languageRepository, TechnologyRepository technologyRepository) {
         this.languageRepository = languageRepository;
         this.technologyRepository = technologyRepository;
     }
 
-    @Override
+
     public List<LanguageResponse> getAll() {
 
         List<Language> languages = languageRepository.findAll();
@@ -39,19 +40,22 @@ public class LanguageManager implements LanguageService {
         return languageResponse;
     }
 
-    @Override
+
     public LanguageResponse add(LanguageRequest languageRequest) {
 
-        languageRepository.findByName(languageRequest.getName()).ifPresent(l -> { throw new EntityAlreadyException("Language already exists with this name"); });
-            LanguageResponse responseItem = new LanguageResponse();
-            responseItem.setName(languageRequest.getName());
-            Language languageToAdd =new Language();
-            languageToAdd.setName(languageRequest.getName());
-            languageRepository.save(languageToAdd);
-            return responseItem;
+        languageRepository.findByName(languageRequest.getName()).ifPresent(
+                l -> { throw new EntityAlreadyException("Language already exists with this name"); });
+
+        LanguageResponse responseItem = new LanguageResponse();
+        responseItem.setName(languageRequest.getName());
+
+        Language languageToAdd =new Language();
+        languageToAdd.setName(languageRequest.getName());
+        languageRepository.save(languageToAdd);
+        return responseItem;
     }
 
-    @Override
+
     public LanguageResponse updateName(LanguageRequest languageRequest, int id) {
 
 
@@ -68,17 +72,17 @@ public class LanguageManager implements LanguageService {
         return responseItem;
     }
 
-    @Override
+
     public void delete(int id) {
         Language language = languageRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Entity not found at this id"));
-          Language languageToDelete = languageRepository.getById(id);
+        Language languageToDelete = languageRepository.getById(id);
         if (languageToDelete == null) {
             throw new RuntimeException("User does not exist");
         }
         languageRepository.deleteById(id);
     }
 
-    @Override
+
     public LanguageResponse getById(int id) {
         Language language = languageRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Entity not found"));
         LanguageResponse languageResponse = new LanguageResponse();
@@ -87,7 +91,7 @@ public class LanguageManager implements LanguageService {
         return languageResponse;
     }
 
-    @Override
+
     public LanguageResponse getByName(String name) {
         Language language = languageRepository.findByName(name).orElseThrow(()-> new EntityNotFoundException("Entity not found at this name"));
         LanguageResponse languageResponse = new LanguageResponse();
@@ -106,3 +110,4 @@ public class LanguageManager implements LanguageService {
 
 
 }
+

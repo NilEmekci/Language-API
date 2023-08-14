@@ -1,32 +1,31 @@
-package com.example.language.business.concretes;
+package com.example.language.service;
 
-import com.example.language.business.abstracts.TechnologyService;
-import com.example.language.business.request.TechnologyRequest;
-import com.example.language.business.response.TechnologyResponse;
-import com.example.language.dataAccess.abstracts.LanguageRepository;
-import com.example.language.dataAccess.abstracts.TechnologyRepository;
-import com.example.language.Model.Language;
-import com.example.language.Model.Technology;
+import com.example.language.dto.TechnologyRequest;
+import com.example.language.dto.TechnologyResponse;
 import com.example.language.exception.EntityAlreadyException;
 import com.example.language.exception.EntityNotFoundException;
+import com.example.language.model.Language;
+import com.example.language.model.Technology;
+import com.example.language.repository.LanguageRepository;
+import com.example.language.repository.TechnologyRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class TechnologyManager implements TechnologyService {
+public class TechnologyService {
 
     private final LanguageRepository languageRepository;
     private final TechnologyRepository technologyRepository;
 
 
-    public TechnologyManager(LanguageRepository languageRepository, TechnologyRepository technologyRepository) {
+    public TechnologyService(LanguageRepository languageRepository, TechnologyRepository technologyRepository) {
         this.languageRepository = languageRepository;
         this.technologyRepository = technologyRepository;
     }
 
-    @Override
+
     public TechnologyResponse add(TechnologyRequest technologyRequest) {
 
         languageRepository.findByName(technologyRequest.getLanguageName()).orElseThrow(() -> new EntityNotFoundException("Language not found "));
@@ -46,7 +45,7 @@ public class TechnologyManager implements TechnologyService {
         return responseItem;
     }
 
-    @Override
+
     public TechnologyResponse update(TechnologyRequest technologyRequest, int id) {
 
         technologyRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Technology not found this id"));
@@ -65,7 +64,7 @@ public class TechnologyManager implements TechnologyService {
         return technologyResponse;
     }
 
-    @Override
+
     public void delete(int id) {
 
         Technology technologyToDelete = technologyRepository.getById(id);
@@ -75,7 +74,7 @@ public class TechnologyManager implements TechnologyService {
         technologyRepository.deleteById(id);
     }
 
-    @Override
+
     public TechnologyResponse getById(int id) {
         Technology technology = technologyRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Technology not found this id"));
         TechnologyResponse technologyResponse = new TechnologyResponse();
@@ -85,7 +84,7 @@ public class TechnologyManager implements TechnologyService {
         return technologyResponse;
     }
 
-    @Override
+
     public TechnologyResponse getByName(String name) {
         Technology technology = technologyRepository.findByName(name).orElseThrow(()-> new EntityNotFoundException("Technology not found this name"));
         TechnologyResponse technologyResponse = new TechnologyResponse();
@@ -95,7 +94,7 @@ public class TechnologyManager implements TechnologyService {
         return technologyResponse;
     }
 
-    @Override
+
     public List<TechnologyResponse> getAll() {
         List<Technology> technologies = technologyRepository.findAll();
         List<TechnologyResponse> technologyResponses = new ArrayList<>();
@@ -119,5 +118,4 @@ public class TechnologyManager implements TechnologyService {
         return technologyRepository.findByName(name).isEmpty();
 
     }
-
 }

@@ -1,8 +1,8 @@
 package com.example.language.controller;
 
-import com.example.language.business.abstracts.LanguageService;
-import com.example.language.business.request.LanguageRequest;
-import com.example.language.business.response.LanguageResponse;
+import com.example.language.dto.LanguageRequest;
+import com.example.language.dto.LanguageResponse;
+import com.example.language.service.LanguageService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;

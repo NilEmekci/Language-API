@@ -1,17 +1,20 @@
-package com.example.language.business.response;
+package com.example.language.dto;
+
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-public class LanguageResponse {
-
+@AllArgsConstructor
+public class TechnologyResponse {
 
     private int id;
     private String name;
+    private String LanguageName ;
 
-    /*private List<String> technologieName;*/
+
+
+
 }
